@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 힐라 공략집</title>
+    <style>
+        /* 전체 배경 및 폰트 설정 */
+        body { font-family: 'Malgun Gothic', sans-serif; text-align: center; background-color: #ffffff; margin: 0; padding: 20px; color: #333; }
+        h1 { margin-bottom: 30px; font-size: 28px; }
+        
+        /* 버튼들을 2줄로 배치하는 그리드 설정 */
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 600px; margin: 0 auto; }
+        
+        /* 기본 버튼 디자인 (사진과 유사하게) */
+        .btn { 
+            display: flex; justify-content: center; align-items: center; 
+            padding: 15px 10px; background-color: #f8f9fa; 
+            border: 1px solid #ddd; color: #0066cc; 
+            text-decoration: none; font-size: 16px; cursor: pointer; 
+            min-height: 50px; box-sizing: border-box; transition: 0.2s;
+        }
+        .btn:hover { background-color: #eef2f5; }
+        
+        /* 대분류 버튼 글씨 강조 */
+        .btn-main { color: #333; font-weight: bold; font-size: 18px; }
+        
+        /* 뒤로가기 버튼 스타일 */
+        .btn-back { grid-column: span 2; background-color: #34495e; color: white; font-weight: bold; border: none; }
+        .btn-back:hover { background-color: #2c3e50; color: white; }
+    </style>
+</head>
+<body>
+
+    <h1>🏆 힐라 공략집</h1>
+    
+    <!-- 버튼들이 생성될 빈 공간 -->
+    <div id="menu-container" class="grid-container"></div>
+
+    <script>
+        // 대분류와 하위분류 데이터
+        const menuData = {
+            "공지사항": ["가입 안내사항", "승전헌터", "연합군"],
+            "헌터": ["헌터스텟&점수", "헌터등급&각성석", "직업 추천"],
+            "장비": ["장비 유효옵션", "옵션&품질작", "템트 정석", "유니크 장비", "프리셋 추천", "스킬룬&일반룬", "도감작"],
+            "라이딩": ["타락한 목장", "라이딩 장비"],
+            "지하던전": ["지하던전 326층", "지하던전 376층", "최고층 등반"],
+            "콜로세움": ["챌린저스 리그덱"],
+            "월드보스": ["월드보스 조합", "월보 무기 추천"]
+        };
+
+        const container = document.getElementById('menu-container');
+
+        // 1. 처음 화면: 대분류 버튼 보여주기
+        function showMainMenu() {
+            container.innerHTML = '';
+            for (const category in menuData) {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-main';
+                btn.innerText = category;
+                btn.onclick = () => showSubMenu(category); // 클릭 시 하위메뉴 함수 실행
+                container.appendChild(btn);
+            }
+        }
+
+        // 2. 대분류 클릭 시: 하위분류 버튼 보여주기
+        function showSubMenu(category) {
+            container.innerHTML = '';
+            
+            // 뒤로가기 버튼 생성
+            const backBtn = document.createElement('button');
+            backBtn.className = 'btn btn-back';
+            backBtn.innerText = '⬅️ 대분류로 돌아가기';
+            backBtn.onclick = showMainMenu;
+            container.appendChild(backBtn);
+
+            // 하위분류 버튼(링크) 생성
+            menuData[category].forEach(sub => {
+                const link = document.createElement('a');
+                link.className = 'btn';
+                link.innerText = sub;
+                
+                // 클릭 시 이동할 상세 페이지 링크 자동 생성 (예: 가입_안내사항.html)
+                // 상세 설명 페이지 파일 이름은 띄어쓰기를 '_'로 바꾼 형태여야 합니다.
+                let fileName = sub.replace(/&/g, 'and').replace(/ /g, '_');
+                link.href = `${fileName}.html`; 
+                
+                container.appendChild(link);
+            });
+        }
+
+        // 스크립트가 실행되면 처음에 대분류를 화면에 띄움
+        showMainMenu();
+    </script>
+</body>
+</html>
