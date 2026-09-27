@@ -9,10 +9,10 @@
         body { font-family: 'Malgun Gothic', sans-serif; text-align: center; background-color: #ffffff; margin: 0; padding: 20px; color: #333; }
         h1 { margin-bottom: 30px; font-size: 28px; }
         
-        /* 버튼들을 2줄로 배치하는 그리드 설정 */
+        /* 버튼들을 2열로 배치하는 그리드 설정 */
         .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 600px; margin: 0 auto; }
         
-        /* 기본 버튼 디자인 (사진과 유사하게) */
+        /* 기본 버튼 디자인 */
         .btn { 
             display: flex; justify-content: center; align-items: center; 
             padding: 15px 10px; background-color: #f8f9fa; 
@@ -22,7 +22,7 @@
         }
         .btn:hover { background-color: #eef2f5; }
         
-        /* 대분류 버튼 글씨 강조 */
+        /* 하위 카테고리가 더 있는 버튼 강조 */
         .btn-main { color: #333; font-weight: bold; font-size: 18px; }
         
         /* 뒤로가기 버튼 스타일 */
@@ -34,63 +34,126 @@
 
     <h1>🏆 힐라 공략집</h1>
     
-    <!-- 버튼들이 생성될 빈 공간 -->
+    <!-- 버튼들이 생성될 공간 -->
     <div id="menu-container" class="grid-container"></div>
 
     <script>
-        // 대분류와 하위분류 데이터
+        // 대분류 - 중분류 - 소분류 다단계 메뉴 구조
         const menuData = {
-            "공지사항": ["가입 안내사항", "승전헌터", "연합군"],
-            "헌터": ["헌터스텟&점수", "헌터등급&각성석", "직업 추천"],
-            "장비": ["장비 유효옵션", "옵션&품질작", "템트 정석", "유니크 장비", "프리셋 추천", "스킬룬&일반룬", "도감작"],
-            "라이딩": ["타락한 목장", "라이딩 장비"],
-            "지하던전": ["지하던전 326층", "지하던전 376층", "최고층 등반"],
-            "콜로세움": ["챌린저스 리그덱"],
-            "월드보스": ["월드보스 조합", "월보 무기 추천"]
+            "헌터": {
+                "헌터의 등급": "헌터의_등급.html",
+                "헌터 각성석": "헌터_각성석.html",
+                "헌터 전직": {
+                    "레인져": "헌터_전직_레인져.html",
+                    "소서러": "헌터_전직_소서러.html",
+                    "팔라딘": "헌터_전직_팔라딘.html",
+                    "버서커": "헌터_전직_버서커.html",
+                    "다크나이트": "헌터_전직_다크나이트.html"
+                },
+                "4차 스킬트리": {
+                    "레인져": "4차_스킬트리_레인져.html",
+                    "소서러": "4차_스킬트리_소서러.html",
+                    "팔라딘": "4차_스킬트리_팔라딘.html",
+                    "버서커": "4차_스킬트리_버서커.html",
+                    "다크나이트": "4차_스킬트리_다크나이트.html"
+                },
+                "목장": {
+                    "라이딩펫": "목장_라이딩펫.html",
+                    "라이딩장비": "목장_라이딩장비.html"
+                }
+            },
+            "등반": {
+                "카부": {
+                    "카부 헌터": "카부_헌터.html",
+                    "카부 장비": "카부_장비.html",
+                    "카부 공략": "카부_공략.html"
+                },
+                "어부": {
+                    "어부 헌터": "어부_헌터.html",
+                    "어부 장비": "어부_장비.html",
+                    "어부 공략": "어부_공략.html"
+                }
+            },
+            "장비": {
+                "유효옵션": "유효옵션.html",
+                "프리셋": "프리셋.html",
+                "옵션&품질작": "옵션and품질작.html",
+                "템트": "템트.html",
+                "유니크": "유니크.html",
+                "룬": "룬.html",
+                "도감작": "도감작.html"
+            },
+            "컨텐츠": {
+                "지하던전": "지하던전.html",
+                "콜로세움": {
+                    "엘리트": "콜로세움_엘리트.html",
+                    "챌린저스": "콜로세움_챌린저스.html"
+                },
+                "월드보스": {
+                    "헌터조합": "월드보스_헌터조합.html",
+                    "패턴공략": "월드보스_패턴공략.html"
+                },
+                "마왕성": {
+                    "앞뜰": "마왕성_앞뜰.html",
+                    "어금니": "마왕성_어금니.html",
+                    "사랑니": "마왕성_사랑니.html"
+                },
+                "승전": "승전.html",
+                "타락한목장": {
+                    "일반스테이지": "타락한목장_일반스테이지.html",
+                    "보스스테이지(스턴O)": "타락한목장_보스스테이지_스턴O.html",
+                    "보스스테이지(스턴X)": "타락한목장_보스스테이지_스턴X.html"
+                },
+                "담금질": "담금질.html"
+            }
         };
 
         const container = document.getElementById('menu-container');
+        
+        // 탐색 히스토리를 저장하는 스택 (2단계, 3단계 다단계 뒤로가기 지원)
+        let historyStack = [];
 
-        // 1. 처음 화면: 대분류 버튼 보여주기
-        function showMainMenu() {
+        function renderMenu(currentMenu) {
             container.innerHTML = '';
-            for (const category in menuData) {
-                const btn = document.createElement('button');
-                btn.className = 'btn btn-main';
-                btn.innerText = category;
-                btn.onclick = () => showSubMenu(category); // 클릭 시 하위메뉴 함수 실행
-                container.appendChild(btn);
+
+            // 이전 단계가 존재하면 '이전으로 돌아가기' 버튼 상단에 표시
+            if (historyStack.length > 0) {
+                const backBtn = document.createElement('button');
+                backBtn.className = 'btn btn-back';
+                backBtn.innerText = '⬅️ 이전으로 돌아가기';
+                backBtn.onclick = () => {
+                    const previousMenu = historyStack.pop();
+                    renderMenu(previousMenu);
+                };
+                container.appendChild(backBtn);
+            }
+
+            for (const key in currentMenu) {
+                const target = currentMenu[key];
+
+                if (typeof target === 'string') {
+                    // 최하위 링크 항목일 경우 <a> 태그 생성
+                    const link = document.createElement('a');
+                    link.className = 'btn';
+                    link.innerText = key;
+                    link.href = target;
+                    container.appendChild(link);
+                } else {
+                    // 하위 카테고리가 더 있을 경우 <button> 태그 생성 후 깊이 이동
+                    const btn = document.createElement('button');
+                    btn.className = 'btn btn-main';
+                    btn.innerText = key;
+                    btn.onclick = () => {
+                        historyStack.push(currentMenu);
+                        renderMenu(target);
+                    };
+                    container.appendChild(btn);
+                }
             }
         }
 
-        // 2. 대분류 클릭 시: 하위분류 버튼 보여주기
-        function showSubMenu(category) {
-            container.innerHTML = '';
-            
-            // 뒤로가기 버튼 생성
-            const backBtn = document.createElement('button');
-            backBtn.className = 'btn btn-back';
-            backBtn.innerText = '⬅️ 대분류로 돌아가기';
-            backBtn.onclick = showMainMenu;
-            container.appendChild(backBtn);
-
-            // 하위분류 버튼(링크) 생성
-            menuData[category].forEach(sub => {
-                const link = document.createElement('a');
-                link.className = 'btn';
-                link.innerText = sub;
-                
-                // 클릭 시 이동할 상세 페이지 링크 자동 생성 (예: 가입_안내사항.html)
-                // 상세 설명 페이지 파일 이름은 띄어쓰기를 '_'로 바꾼 형태여야 합니다.
-                let fileName = sub.replace(/&/g, 'and').replace(/ /g, '_');
-                link.href = `${fileName}.html`; 
-                
-                container.appendChild(link);
-            });
-        }
-
-        // 스크립트가 실행되면 처음에 대분류를 화면에 띄움
-        showMainMenu();
+        // 초기 화면 구동
+        renderMenu(menuData);
     </script>
 </body>
 </html>
