@@ -155,14 +155,16 @@
             transform: translateY(0);
         }
 
-        /* 2칸 전체 너비 차지하는 와이드 버튼 스타일 */
+        /* 2칸 전체 너비 차지하는 와이드 버튼 스타일 (필독사항 전용) */
         .btn-full {
             grid-column: span 2;
             flex-direction: row;
-            gap: 12px;
-            min-height: 65px;
+            gap: 14px;
+            min-height: 80px; /* 세로 높이 확장 */
+            margin-top: 10px;  /* 상단 메뉴와의 여백 추가 */
+            font-size: 17px;
             background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-hover) 100%);
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            border: 1px solid rgba(245, 158, 11, 0.35);
         }
 
         /* 버튼 이미지 스타일 */
@@ -174,8 +176,10 @@
             margin-bottom: 6px;
         }
 
-        /* 와이드 버튼 내부 이미지 정렬 정돈 */
+        /* 와이드 버튼 내부 이미지 크기 및 정렬 */
         .btn-full .btn-img {
+            width: 48px;
+            height: 48px;
             margin-bottom: 0;
         }
 
