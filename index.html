@@ -40,7 +40,7 @@
             background-color: var(--bg-color); 
             color: var(--text-main); 
             margin: 0; 
-            padding: 24px 16px 80px 16px; /* 아래쪽 버튼 여백 확보 */
+            padding: 24px 16px 80px 16px; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -78,8 +78,9 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
-        /* 타이틀 영역 (정중앙 정렬) */
+        /* 타이틀 영역 (제목 완벽 정중앙 배치) */
         .header {
+            position: relative; /* 강아지 사진 절대 위치 기준 */
             text-align: center;
             margin-bottom: 24px;
             padding: 20px 16px;
@@ -89,13 +90,15 @@
             box-shadow: var(--shadow);
             display: flex;
             align-items: center;
-            justify-content: center; /* 중앙 정렬 */
-            gap: 12px;
+            justify-content: center; /* 제목 기준 정중앙 정렬 */
+            min-height: 78px;
             transition: background 0.3s ease;
         }
 
-        /* 강아지 이미지 프로필 스타일 */
+        /* 강아지 이미지를 왼쪽에 고정하여 제목 중앙에 영향 없도록 처리 */
         .header-img {
+            position: absolute;
+            left: 20px;
             width: 38px;
             height: 38px;
             border-radius: 50%;
@@ -175,8 +178,8 @@
 
     <div class="container">
         <div class="header">
-            <!-- 강아지 이미지 -->
-            <img src="dog.png" alt="강아지" class="header-img">
+            <!-- 강아지 이미지 (왼쪽에 배치되어 제목 중앙 정렬에 영향을 안 줌) -->
+            <img src="dog.jpg" alt="강아지" class="header-img">
             <h1>힐라 공략집</h1>
         </div>
         
