@@ -4,120 +4,230 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🏆 힐라 공략집</title>
+    <!-- 웹폰트 설정 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;800&display=swap" rel="stylesheet">
     <style>
-        /* 전체 배경 및 폰트 설정 */
-        body { font-family: 'Malgun Gothic', sans-serif; text-align: center; background-color: #ffffff; margin: 0; padding: 20px; color: #333; }
-        h1 { margin-bottom: 30px; font-size: 28px; }
-        
-        /* 버튼들을 2열로 배치하는 그리드 설정 */
-        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 600px; margin: 0 auto; }
-        
-        /* 모든 버튼 통일 디자인 ('헌터 전직' 버튼 스타일과 동일하게 적용) */
-        .btn { 
-            display: flex; justify-content: center; align-items: center; 
-            padding: 15px 10px; background-color: #f8f9fa; 
-            border: 1px solid #ddd; color: #333; font-weight: bold; font-size: 18px;
-            text-decoration: none; cursor: pointer; 
-            min-height: 50px; box-sizing: border-box; transition: 0.2s;
+        :root {
+            --bg-color: #0f172a;        /* 배경 어두운 블루/슬레이트 */
+            --card-bg: #1e293b;        /* 카드 배경 */
+            --card-hover: #334155;     /* 카드 호버 배경 */
+            --accent-gold: #fbbf24;    /* 강조 골드 */
+            --accent-blue: #38bdf8;    /* 하위메뉴 표시 블루 */
+            --text-main: #f8fafc;      /* 메인 글자색 */
+            --text-sub: #94a3b8;       /* 보조 글자색 */
         }
-        .btn:hover { background-color: #eef2f5; }
+
+        * { box-sizing: border-box; }
+
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 24px 16px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* 타이틀 영역 디테일 */
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 20px 16px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .header h1 { 
+            margin: 0; 
+            font-size: 24px; 
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fef08a 0%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 그리드 및 카드 버튼 스타일 */
+        .grid-container { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 12px; 
+        }
         
-        /* 뒤로가기 버튼 스타일 */
-        .btn-back { grid-column: span 2; background-color: #34495e; color: white; font-weight: bold; border: none; }
-        .btn-back:hover { background-color: #2c3e50; color: white; }
+        .btn { 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            padding: 18px 12px; 
+            background-color: var(--card-bg); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 14px;
+            color: var(--text-main); 
+            text-decoration: none; 
+            font-size: 16px; 
+            font-weight: 700;
+            cursor: pointer; 
+            min-height: 75px; 
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        /* 마우스 올릴 때 상단으로 떠오르는 애니메이션 */
+        .btn:hover { 
+            background-color: var(--card-hover); 
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* 아이콘 크기 및 하위 카테고리 태그 */
+        .btn-icon { font-size: 22px; margin-bottom: 4px; }
+        .btn-badge {
+            font-size: 11px;
+            color: var(--accent-blue);
+            background: rgba(56, 189, 248, 0.12);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* 뒤로가기 버튼 */
+        .btn-back { 
+            grid-column: span 2; 
+            background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+            color: #e2e8f0; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            min-height: 50px;
+            flex-direction: row;
+            gap: 8px;
+        }
+
+        .btn-back:hover { 
+            background: linear-gradient(135deg, #475569 0%, #334155 100%); 
+        }
     </style>
 </head>
 <body>
 
-    <h1>🏆 힐라 공략집</h1>
-    
-    <!-- 버튼들이 생성될 공간 -->
-    <div id="menu-container" class="grid-container"></div>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 힐라 공략집</h1>
+        </div>
+        
+        <!-- 버튼 리스트 -->
+        <div id="menu-container" class="grid-container"></div>
+    </div>
 
     <script>
-        // 대분류 - 중분류 - 소분류 다단계 메뉴 구조
+        // 메뉴 데이터 (아이콘 정보 포함)
         const menuData = {
             "헌터": {
-                "헌터의 등급": "헌터의_등급.html",
-                "헌터 각성석": "헌터_각성석.html",
-                "헌터 전직": {
-                    "레인져": "헌터_전직_레인져.html",
-                    "소서러": "헌터_전직_소서러.html",
-                    "팔라딘": "헌터_전직_팔라딘.html",
-                    "버서커": "헌터_전직_버서커.html",
-                    "다크나이트": "헌터_전직_다크나이트.html"
-                },
-                "4차 스킬트리": {
-                    "레인져": "4차_스킬트리_레인져.html",
-                    "소서러": "4차_스킬트리_소서러.html",
-                    "팔라딘": "4차_스킬트리_팔라딘.html",
-                    "버서커": "4차_스킬트리_버서커.html",
-                    "다크나이트": "4차_스킬트리_다크나이트.html"
-                },
-                "목장": {
-                    "라이딩펫": "목장_라이딩펫.html",
-                    "라이딩장비": "목장_라이딩장비.html"
+                icon: "🏹",
+                items: {
+                    "헌터의 등급": "헌터의_등급.html",
+                    "헌터 각성석": "헌터_각성석.html",
+                    "헌터 전직": {
+                        "레인져": "헌터_전직_레인져.html",
+                        "소서러": "헌터_전직_소서러.html",
+                        "팔라딘": "헌터_전직_팔라딘.html",
+                        "버서커": "헌터_전직_버서커.html",
+                        "다크나이트": "헌터_전직_다크나이트.html"
+                    },
+                    "4차 스킬트리": {
+                        "레인져": "4차_스킬트리_레인져.html",
+                        "소서러": "4차_스킬트리_소서러.html",
+                        "팔라딘": "4차_스킬트리_팔라딘.html",
+                        "버서커": "4차_스킬트리_버서커.html",
+                        "다크나이트": "4차_스킬트리_다크나이트.html"
+                    },
+                    "목장": {
+                        "라이딩펫": "목장_라이딩펫.html",
+                        "라이딩장비": "목장_라이딩장비.html"
+                    }
                 }
             },
             "등반": {
-                "카부": {
-                    "카부 헌터": "카부_헌터.html",
-                    "카부 장비": "카부_장비.html",
-                    "카부 공략": "카부_공략.html"
-                },
-                "어부": {
-                    "어부 헌터": "어부_헌터.html",
-                    "어부 장비": "어부_장비.html",
-                    "어부 공략": "어부_공략.html"
+                icon: "🏔️",
+                items: {
+                    "카부": {
+                        "카부 헌터": "카부_헌터.html",
+                        "카부 장비": "카부_장비.html",
+                        "카부 공략": "카부_공략.html"
+                    },
+                    "어부": {
+                        "어부 헌터": "어부_헌터.html",
+                        "어부 장비": "어부_장비.html",
+                        "어부 공략": "어부_공략.html"
+                    }
                 }
             },
             "장비": {
-                "유효옵션": "유효옵션.html",
-                "프리셋": "프리셋.html",
-                "옵션&품질작": "옵션and품질작.html",
-                "템트": "템트.html",
-                "유니크": "유니크.html",
-                "룬": "룬.html",
-                "도감작": "도감작.html"
+                icon: "⚔️",
+                items: {
+                    "유효옵션": "유효옵션.html",
+                    "프리셋": "프리셋.html",
+                    "옵션&품질작": "옵션and품질작.html",
+                    "템트": "템트.html",
+                    "유니크": "유니크.html",
+                    "룬": "룬.html",
+                    "도감작": "도감작.html"
+                }
             },
             "컨텐츠": {
-                "지하던전": "지하던전.html",
-                "콜로세움": {
-                    "엘리트": "콜로세움_엘리트.html",
-                    "챌린저스": "콜로세움_챌린저스.html"
-                },
-                "월드보스": {
-                    "헌터조합": "월드보스_헌터조합.html",
-                    "패턴공략": "월드보스_패턴공략.html"
-                },
-                "마왕성": {
-                    "앞뜰": "마왕성_앞뜰.html",
-                    "어금니": "마왕성_어금니.html",
-                    "사랑니": "마왕성_사랑니.html"
-                },
-                "승전": "승전.html",
-                "타락한목장": {
-                    "일반스테이지": "타락한목장_일반스테이지.html",
-                    "보스스테이지(스턴O)": "타락한목장_보스스테이지_스턴O.html",
-                    "보스스테이지(스턴X)": "타락한목장_보스스테이지_스턴X.html"
-                },
-                "담금질": "담금질.html"
+                icon: "🎮",
+                items: {
+                    "지하던전": "지하던전.html",
+                    "콜로세움": {
+                        "엘리트": "콜로세움_엘리트.html",
+                        "챌린저스": "콜로세움_챌린저스.html"
+                    },
+                    "월드보스": {
+                        "헌터조합": "월드보스_헌터조합.html",
+                        "패턴공략": "월드보스_패턴공략.html"
+                    },
+                    "마왕성": {
+                        "앞뜰": "마왕성_앞뜰.html",
+                        "어금니": "마왕성_어금니.html",
+                        "사랑니": "마왕성_사랑니.html"
+                    },
+                    "승전": "승전.html",
+                    "타락한목장": {
+                        "일반스테이지": "타락한목장_일반스테이지.html",
+                        "보스스테이지(스턴O)": "타락한목장_보스스테이지_스턴O.html",
+                        "보스스테이지(스턴X)": "타락한목장_보스스테이지_스턴X.html"
+                    },
+                    "담금질": "담금질.html"
+                }
             }
         };
 
         const container = document.getElementById('menu-container');
-        
-        // 탐색 히스토리를 저장하는 스택
         let historyStack = [];
 
         function renderMenu(currentMenu) {
             container.innerHTML = '';
 
-            // 이전 단계가 존재하면 '이전으로 돌아가기' 버튼 상단에 표시
+            // 뒤로가기 버튼
             if (historyStack.length > 0) {
                 const backBtn = document.createElement('button');
                 backBtn.className = 'btn btn-back';
-                backBtn.innerText = '⬅️ 이전으로 돌아가기';
+                backBtn.innerHTML = '<span>⬅️</span> <span>이전으로 돌아가기</span>';
                 backBtn.onclick = () => {
                     const previousMenu = historyStack.pop();
                     renderMenu(previousMenu);
@@ -126,20 +236,35 @@
             }
 
             for (const key in currentMenu) {
-                const target = currentMenu[key];
+                const node = currentMenu[key];
+
+                // 루트 대분류 아이템 처리 (icon + items 구조)
+                const isRootNode = node && typeof node === 'object' && node.icon && node.items;
+                const icon = isRootNode ? node.icon : null;
+                const target = isRootNode ? node.items : node;
 
                 if (typeof target === 'string') {
-                    // 최하위 링크 항목일 경우 <a> 태그 생성
+                    // 최하위 상세페이지 링크 (<a> 태그)
                     const link = document.createElement('a');
                     link.className = 'btn';
                     link.innerText = key;
                     link.href = target;
                     container.appendChild(link);
                 } else {
-                    // 하위 카테고리가 더 있을 경우 <button> 태그 생성 후 깊이 이동
+                    // 하위 카테고리가 더 있는 폴더형 버튼 (<button> 태그)
                     const btn = document.createElement('button');
                     btn.className = 'btn';
-                    btn.innerText = key;
+                    
+                    let htmlContent = '';
+                    if (icon) htmlContent += `<span class="btn-icon">${icon}</span>`;
+                    htmlContent += `<span>${key}</span>`;
+                    
+                    // 하위 카테고리가 남아있음을 알려주는 배지 추가
+                    if (!isRootNode) {
+                        htmlContent += `<span class="btn-badge">하위 메뉴</span>`;
+                    }
+
+                    btn.innerHTML = htmlContent;
                     btn.onclick = () => {
                         historyStack.push(currentMenu);
                         renderMenu(target);
