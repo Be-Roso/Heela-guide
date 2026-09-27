@@ -40,7 +40,7 @@
             background-color: var(--bg-color); 
             color: var(--text-main); 
             margin: 0; 
-            padding: 24px 16px; 
+            padding: 24px 16px 80px 16px; /* 아래쪽 버튼 여백 확보 */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -50,43 +50,47 @@
         .container {
             width: 100%;
             max-width: 500px;
-            position: relative;
         }
 
-        /* 다크/라이트 모드 전환 버튼 */
+        /* 오른쪽 아래 고정 다크/라이트 모드 전환 플로팅 버튼 */
         .theme-toggle {
-            position: absolute;
-            top: 12px;
-            right: 12px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            font-size: 16px;
-            padding: 6px 12px;
-            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 10px 16px;
+            border-radius: 30px;
             cursor: pointer;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
             transition: all 0.2s ease;
-            z-index: 10;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .theme-toggle:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
-        /* 타이틀 영역 */
+        /* 타이틀 영역 (정중앙 정렬) */
         .header {
             text-align: center;
             margin-bottom: 24px;
-            padding: 18px 16px;
+            padding: 20px 16px;
             background: var(--header-bg);
             border-radius: 18px;
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            justify-content: center; /* 중앙 정렬 */
+            gap: 12px;
             transition: background 0.3s ease;
         }
 
@@ -170,12 +174,9 @@
 <body>
 
     <div class="container">
-        <!-- 테마 전환 버튼 (☀️/🌙) -->
-        <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">🌙 다크</button>
-
         <div class="header">
-            <!-- 강아지 이미지 (파일명: dog.jpg) -->
-            <img src="dog.jpg" alt="강아지" class="header-img">
+            <!-- 강아지 이미지 -->
+            <img src="dog.png" alt="강아지" class="header-img">
             <h1>힐라 공략집</h1>
         </div>
         
@@ -183,11 +184,14 @@
         <div id="menu-container" class="grid-container"></div>
     </div>
 
+    <!-- 오른쪽 아래 고정 테마 전환 버튼 -->
+    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">🎨 테마 변경 (🌙 다크)</button>
+
     <script>
-        // 메뉴 데이터 (헌터 이모지를 사람 형태 🧝‍♂️ 로 변경)
+        // 메뉴 데이터
         const menuData = {
             "헌터": {
-                icon: "🧝‍♂️", // 사람 느낌의 헌터 이모지
+                icon: "🧝‍♂️",
                 items: {
                     "헌터의 등급": "헌터의_등급.html",
                     "헌터 각성석": "헌터_각성석.html",
@@ -278,10 +282,10 @@
             const isLight = body.classList.contains('light-mode');
 
             if (isLight) {
-                themeBtn.innerText = '☀️ 라이트';
+                themeBtn.innerHTML = '🎨 테마 변경 (☀️ 라이트)';
                 localStorage.setItem('theme', 'light');
             } else {
-                themeBtn.innerText = '🌙 다크';
+                themeBtn.innerHTML = '🎨 테마 변경 (🌙 다크)';
                 localStorage.setItem('theme', 'dark');
             }
         }
@@ -290,7 +294,7 @@
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             document.body.classList.add('light-mode');
-            document.getElementById('theme-btn').innerText = '☀️ 라이트';
+            document.getElementById('theme-btn').innerHTML = '🎨 테마 변경 (☀️ 라이트)';
         }
 
         // 메뉴 렌더링 함수
