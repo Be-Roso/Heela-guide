@@ -12,18 +12,15 @@
         /* 버튼들을 2열로 배치하는 그리드 설정 */
         .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 600px; margin: 0 auto; }
         
-        /* 기본 버튼 디자인 */
+        /* 모든 버튼 통일 디자인 ('헌터 전직' 버튼 스타일과 동일하게 적용) */
         .btn { 
             display: flex; justify-content: center; align-items: center; 
             padding: 15px 10px; background-color: #f8f9fa; 
-            border: 1px solid #ddd; color: #0066cc; 
-            text-decoration: none; font-size: 16px; cursor: pointer; 
+            border: 1px solid #ddd; color: #333; font-weight: bold; font-size: 18px;
+            text-decoration: none; cursor: pointer; 
             min-height: 50px; box-sizing: border-box; transition: 0.2s;
         }
         .btn:hover { background-color: #eef2f5; }
-        
-        /* 하위 카테고리가 더 있는 버튼 강조 */
-        .btn-main { color: #333; font-weight: bold; font-size: 18px; }
         
         /* 뒤로가기 버튼 스타일 */
         .btn-back { grid-column: span 2; background-color: #34495e; color: white; font-weight: bold; border: none; }
@@ -110,7 +107,7 @@
 
         const container = document.getElementById('menu-container');
         
-        // 탐색 히스토리를 저장하는 스택 (2단계, 3단계 다단계 뒤로가기 지원)
+        // 탐색 히스토리를 저장하는 스택
         let historyStack = [];
 
         function renderMenu(currentMenu) {
@@ -141,7 +138,7 @@
                 } else {
                     // 하위 카테고리가 더 있을 경우 <button> 태그 생성 후 깊이 이동
                     const btn = document.createElement('button');
-                    btn.className = 'btn btn-main';
+                    btn.className = 'btn';
                     btn.innerText = key;
                     btn.onclick = () => {
                         historyStack.push(currentMenu);
