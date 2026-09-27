@@ -155,6 +155,16 @@
             transform: translateY(0);
         }
 
+        /* 2칸 전체 너비 차지하는 와이드 버튼 스타일 */
+        .btn-full {
+            grid-column: span 2;
+            flex-direction: row;
+            gap: 12px;
+            min-height: 65px;
+            background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-hover) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
         /* 버튼 이미지 스타일 */
         .btn-img {
             width: 44px;
@@ -162,6 +172,11 @@
             object-fit: contain;
             border-radius: 10px;
             margin-bottom: 6px;
+        }
+
+        /* 와이드 버튼 내부 이미지 정렬 정돈 */
+        .btn-full .btn-img {
+            margin-bottom: 0;
         }
 
         .btn-badge {
@@ -205,7 +220,7 @@
     <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">🎨 테마 변경 (🌙 다크)</button>
 
     <script>
-        // 메뉴 데이터 (모두 .jpg 확장자)
+        // 메뉴 데이터
         const menuData = {
             "헌터": {
                 img: "hunter.jpg",
@@ -284,6 +299,15 @@
                     },
                     "담금질": "담금질.html"
                 }
+            },
+            "필독사항": {
+                img: "notice.jpg",
+                fullWidth: true,
+                items: {
+                    "안내사항": "안내사항.html",
+                    "승전헌터": "승전헌터.html",
+                    "연합군": "연합군.html"
+                }
             }
         };
 
@@ -333,6 +357,7 @@
                 const node = currentMenu[key];
                 const isRootNode = node && typeof node === 'object' && node.items;
                 const img = isRootNode ? node.img : null;
+                const fullWidth = isRootNode ? node.fullWidth : false;
                 const target = isRootNode ? node.items : node;
 
                 if (typeof target === 'string') {
@@ -343,7 +368,7 @@
                     container.appendChild(link);
                 } else {
                     const btn = document.createElement('button');
-                    btn.className = 'btn';
+                    btn.className = 'btn' + (fullWidth ? ' btn-full' : '');
                     
                     let htmlContent = '';
                     if (img) htmlContent += `<img src="${img}" alt="${key}" class="btn-img">`;
